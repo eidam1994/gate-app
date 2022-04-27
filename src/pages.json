@@ -10,7 +10,7 @@
 			"iconPath": "static/home.png",
 			"selectedIconPath": "static/selectedhome.png"
 		},{
-			"pagePath":"pages/index/index2",
+			"pagePath":"pages/account/index",
 			"text": "我的",
 			"iconPath": "static/my.png",
 			"selectedIconPath": "static/my2.png"
@@ -40,17 +40,23 @@
 			}
 		},
 		{
-			"path": "pages/index/index2",
+			"path": "pages/account/index",
 			"style": {
 				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
 			}
 		},
 		{
-			"path": "pages/index/index3",
+			"path": "pages/open/index",
 			"style": {
-				"navigationBarTitleText": "test",
-				"navigationBarBackgroundColor": "#ffffff"
+				"navigationBarTitleText": "一键开门",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
 			}
 		}
 	],
