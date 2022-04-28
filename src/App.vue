@@ -25,5 +25,9 @@
 .uni-card__content {
   padding: 0px !important;
 }
+
+.uni-page-head__title {
+  font-weight: normal !important;
+}
     /*每个页面公共css */
 </style>

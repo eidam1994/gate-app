@@ -1,6 +1,6 @@
 {
 	"tabBar": {
-		"selectedColor":"#dd5900",
+		"selectedColor":"#1296db",
 		"color": "#999999",
 		"backgroundColor":"#ffffff",
 		"borderStyle": "black",
@@ -19,7 +19,8 @@
 			"height": "80px",
 			"iconWidth": "60px",
 			"text": "",
-			"iconPath": "static/open.png"
+			"iconPath": "static/door.png",
+			"backgroundImage":"static/white.png"
 		}
 	},
 	"easycom": {
@@ -33,7 +34,8 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "首页",
-				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007aff",
 				"navigationBarShadow": {
 					"colorType": "grey"
 				}
@@ -43,7 +45,8 @@
 			"path": "pages/account/index",
 			"style": {
 				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007aff",
 				"navigationBarShadow": {
 					"colorType": "grey"
 				}
@@ -53,6 +56,28 @@
 			"path": "pages/open/index",
 			"style": {
 				"navigationBarTitleText": "一键开门",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007aff",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#007aff",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
+			}
+		},
+		{
+			"path": "pages/login/register",
+			"style": {
+				"navigationBarTitleText": "注册",
 				"navigationBarBackgroundColor": "#ffffff",
 				"navigationBarShadow": {
 					"colorType": "grey"

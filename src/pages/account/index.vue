@@ -11,7 +11,7 @@
         </uni-list>
       </uni-card>
     <uni-card>
-      <button type="primary">退出登录</button>
+      <button type="primary" @click="logout">退出登录</button>
     </uni-card>
   </view>
 </template>
@@ -32,6 +32,11 @@ export default Vue.extend({
   onLoad() {
   },
   methods: {
+    logout() {
+      uni.reLaunch({
+        url: '/pages/login/index'
+      });
+    }
   },
   onShow() {
 
