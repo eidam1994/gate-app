@@ -1,7 +1,7 @@
 <template>
   <view>
       <uni-card title="XXX小区" sub-title="一栋一单元">
-        <button @click="openDoor">
+        <button type="primary" @click="openDoor">
           一键开门
         </button>
       </uni-card>

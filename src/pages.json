@@ -8,7 +8,7 @@
 			"pagePath":"pages/index/index",
 			"text": "首页",
 			"iconPath": "static/home.png",
-			"selectedIconPath": "static/selectedhome.png"
+			"selectedIconPath": "static/home2.png"
 		},{
 			"pagePath":"pages/account/index",
 			"text": "我的",
@@ -34,8 +34,8 @@
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "首页",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor": "#007aff",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
 				"navigationBarShadow": {
 					"colorType": "grey"
 				}
@@ -45,8 +45,8 @@
 			"path": "pages/account/index",
 			"style": {
 				"navigationBarTitleText": "我的",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor": "#007aff",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
 				"navigationBarShadow": {
 					"colorType": "grey"
 				}
@@ -56,8 +56,8 @@
 			"path": "pages/open/index",
 			"style": {
 				"navigationBarTitleText": "一键开门",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor": "#007aff",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
 				"navigationBarShadow": {
 					"colorType": "grey"
 				}
@@ -67,8 +67,8 @@
 			"path": "pages/login/index",
 			"style": {
 				"navigationBarTitleText": "登录",
-				"navigationBarTextStyle": "white",
-				"navigationBarBackgroundColor": "#007aff",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
 				"navigationBarShadow": {
 					"colorType": "grey"
 				}
@@ -78,7 +78,52 @@
 			"path": "pages/login/register",
 			"style": {
 				"navigationBarTitleText": "注册",
-				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
+			}
+		},
+		{
+			"path": "pages/house/index",
+			"style": {
+				"navigationBarTitleText": "房屋登记",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
+			}
+		},
+		{
+			"path": "pages/house/add",
+			"style": {
+				"navigationBarTitleText": "新增房屋",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
+			}
+		},
+		{
+			"path": "pages/person/index",
+			"style": {
+				"navigationBarTitleText": "租客登记",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
+			}
+		},
+		{
+			"path": "pages/person/add",
+			"style": {
+				"navigationBarTitleText": "新增租客",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
 				"navigationBarShadow": {
 					"colorType": "grey"
 				}

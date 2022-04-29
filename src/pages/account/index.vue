@@ -1,18 +1,15 @@
 <template>
   <view class="container">
-      <uni-card style="margin-top: 10px" :isFull="true" title="张三" extra="额外信息" :thumbnail="'/static/person.png'">
-        <uni-list style="margin-top: 10px">
-          <uni-list-item title="今日新闻" showArrow></uni-list-item>
-          <uni-list-item title="今日新闻" showArrow></uni-list-item>
-          <uni-list-item title="今日新闻" showArrow></uni-list-item>
-          <uni-list-item title="今日新闻" showArrow></uni-list-item>
-          <uni-list-item title="今日新闻" showArrow></uni-list-item>
-          <uni-list-item title="今日新闻" showArrow></uni-list-item>
+      <uni-card style="margin-top: 10px" :isFull="true" title="张三" :thumbnail="'/static/person.png'">
+        <uni-list style="margin-top: 10px;border: none">
+          <uni-list-item :showExtraIcon="true" :extra-icon="{color: '#ea64d4',size: '22', type: 'locked-filled'}" title="修改密码" clickable link @click="onClick" ></uni-list-item>
+          <uni-list-item :showExtraIcon="true" :extra-icon="{color: '#e04760',size: '22', type: 'chatboxes-filled'}" title="投诉与建议" clickable link @click="onClick" ></uni-list-item>
+          <uni-list-item :showExtraIcon="true" :extra-icon="{color: '#ee8142',size: '22', type: 'help-filled'}" title="帮助中心" clickable link @click="onClick" ></uni-list-item>
+          <uni-list-item :showExtraIcon="true" :extra-icon="{color: '#34b8e8',size: '22', type: 'info-filled'}" title="关于我们" clickable link @click="onClick" ></uni-list-item>
+          <uni-list-item :showExtraIcon="true" :extra-icon="{color: '#27ce2b',size: '22', type: 'gear-filled'}" title="设置" clickable link @click="onClick" ></uni-list-item>
         </uni-list>
       </uni-card>
-    <uni-card>
-      <button type="primary" @click="logout">退出登录</button>
-    </uni-card>
+      <button style="margin-top: 10px" @click="logout">退出登录</button>
   </view>
 </template>
 
@@ -36,6 +33,13 @@ export default Vue.extend({
       uni.reLaunch({
         url: '/pages/login/index'
       });
+    },
+    onClick() {
+      uni.showToast({
+        title: `正在建设中`,
+        icon: 'error',
+        mask: true
+      })
     }
   },
   onShow() {
@@ -45,6 +49,9 @@ export default Vue.extend({
 </script>
 
 <style>
+.uni-card--border {
+  border: none;
+}
 .content {
   display: flex;
   flex-direction: column;

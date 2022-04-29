@@ -61,7 +61,7 @@ export default Vue.extend({
             errorMessage: '确认密码不能为空'
           },
             {
-              validateFunction: function (rule, value, data, callback) {
+              validateFunction: function (rule: any, value: any, data: { password: any; }, callback: (arg0: string) => void) {
                 if (value != data.password) {
                   callback('两次输入的密码不同')
                 }
@@ -81,13 +81,14 @@ export default Vue.extend({
   onLoad() {
   },
   methods: {
-    submit(ref) {
-      this.$refs[ref].validate().then(res => {
+    submit(ref: string | number) {
+      const form:any = this.$refs[ref]
+      form.validate().then((res: any) => {
         console.log('success', res);
         uni.showToast({
           title: `校验通过`
         })
-      }).catch(err => {
+      }).catch((err: any) => {
         console.log('err', err);
       })
     },
@@ -99,7 +100,6 @@ export default Vue.extend({
 .example {
   padding: 15px;
   background-color: #fff;
-  padding-top: 180px;
 }
 
 .segmented-control {

@@ -1,5 +1,6 @@
 <template>
   <view class="content">
+    <uni-title style="margin-top: 80px" type="h1" title="珞珈德毅智慧门禁" align="center"></uni-title>
     <view class="example">
       <!-- 自定义表单校验 -->
       <uni-forms ref="customForm" :rules="customRules" :modelValue="customFormData">
@@ -64,13 +65,17 @@ export default Vue.extend({
   onLoad() {
   },
   methods: {
-    submit(ref) {
-      this.$refs[ref].validate().then(res => {
+    submit(ref: string | number) {
+      const form:any = this.$refs[ref]
+      form.validate().then((res: any) => {
         console.log('success', res);
         uni.showToast({
           title: `校验通过`
         })
-      }).catch(err => {
+        uni.reLaunch({
+          url: '/pages/index/index'
+        });
+      }).catch((err: any) => {
         console.log('err', err);
       })
     },
@@ -93,7 +98,7 @@ export default Vue.extend({
 .example {
   padding: 15px;
   background-color: #fff;
-  padding-top: 180px;
+  padding-top: 100px;
 }
 
 .segmented-control {

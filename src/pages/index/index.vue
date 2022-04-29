@@ -1,37 +1,47 @@
 <template>
   <view class="">
-    <uni-grid :column="3" :show-border="false" :square="false">
-      <uni-grid-item>
-        <view class="grid-item-box">
-          <image class="image" :src="'/static/home.png'" mode="aspectFill" />
-          <text class="text">Grid 1</text>
-        </view>
-      </uni-grid-item>
-      <uni-grid-item>
-        <view class="grid-item-box">
-          <image class="image" :src="'/static/home.png'" mode="aspectFill" />
-          <text class="text">Grid 1</text>
-        </view>
-      </uni-grid-item>
-      <uni-grid-item>
-        <view class="grid-item-box">
-          <image class="image" :src="'/static/home.png'" mode="aspectFill" />
-          <text class="text">Grid 1</text>
-        </view>
-      </uni-grid-item>
-      <uni-grid-item>
-        <view class="grid-item-box">
-          <image class="image" :src="'/static/home.png'" mode="aspectFill" />
-          <text class="text">Grid 1</text>
-        </view>
-      </uni-grid-item>
-      <uni-grid-item>
-        <view class="grid-item-box">
-          <image class="image" :src="'/static/home.png'" mode="aspectFill" />
-          <text class="text">Grid 1</text>
-        </view>
-      </uni-grid-item>
-    </uni-grid>
+    <uni-card>
+      <cover-image src="/static/welcome.jpeg"></cover-image>
+    </uni-card>
+    <uni-card>
+      <uni-grid :column="3" :show-border="false" :square="false">
+        <uni-grid-item>
+          <view @click="goToHouse" class="grid-item-box">
+            <image class="image" :src="'/static/house.png'" mode="aspectFill" />
+            <text class="text">房屋登记</text>
+          </view>
+        </uni-grid-item>
+        <uni-grid-item>
+          <view @click="goToPerson" class="grid-item-box">
+            <image class="image" :src="'/static/addPerson.png'" mode="aspectFill" />
+            <text class="text">租客登记</text>
+          </view>
+        </uni-grid-item>
+        <uni-grid-item>
+          <view @click="onClick" class="grid-item-box">
+            <image class="image" :src="'/static/netPay.png'" mode="aspectFill" />
+            <text class="text">缴纳网费</text>
+          </view>
+        </uni-grid-item>
+        <uni-grid-item>
+          <view @click="onClick" class="grid-item-box">
+            <image class="image" :src="'/static/rent.png'" mode="aspectFill" />
+            <text class="text">缴纳房租</text>
+          </view>
+        </uni-grid-item>
+        <uni-grid-item>
+          <view class="grid-item-box">
+            <image class="image" :src="'/static/account.png'" mode="aspectFill" />
+            <text class="text">个人中心</text>
+          </view>
+        </uni-grid-item>
+      </uni-grid>
+    </uni-card>
+    <uni-card title="社区活动">
+      <view class="communicate">
+        <cover-image style="width: 50px;width: 50px" src="/static/empty.png"></cover-image>
+      </view>
+    </uni-card>
   </view>
 </template>
 
@@ -46,7 +56,25 @@ export default Vue.extend({
   onLoad() {
 
   },
-  methods: {},
+  methods: {
+    goToHouse() {
+      uni.navigateTo({
+        url: '/pages/house/index'
+      });
+    },
+    goToPerson() {
+      uni.navigateTo({
+        url: '/pages/person/index'
+      });
+    },
+    onClick() {
+      uni.showToast({
+        title: `正在建设中`,
+        icon: 'error',
+        mask: true
+      })
+    }
+  },
   onShow() {
 
   }
@@ -54,6 +82,13 @@ export default Vue.extend({
 </script>
 
 <style>
+.communicate{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+}
+
 .image {
   width: 25px;
   height: 25px;
