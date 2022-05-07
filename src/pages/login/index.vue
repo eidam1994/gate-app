@@ -20,10 +20,11 @@
   </view>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
+import request from "@/api/request";
 
-export default Vue.extend({
+export default{
   data() {
     return {
       roles: [{
@@ -35,9 +36,8 @@ export default Vue.extend({
       }],
       // 表单数据
       customFormData: {
-        name: '',
-        age: '',
-        role: ''
+        username: '',
+        password: '',
       },
       // 自定义表单校验规则
       customRules: {
@@ -65,17 +65,23 @@ export default Vue.extend({
   onLoad() {
   },
   methods: {
-    submit(ref: string | number) {
-      const form:any = this.$refs[ref]
-      form.validate().then((res: any) => {
-        console.log('success', res);
-        uni.showToast({
-          title: `校验通过`
+    submit(ref) {
+      const form = this.$refs[ref]
+      form.validate().then(() => {
+        request("/manage/app/login", this.customFormData, "post").then(res => {
+          if (res.code == 0) {
+            uni.setStorageSync('user', JSON.stringify(res.data));
+            uni.reLaunch({
+              url: '/pages/index/index'
+            });
+          } else {
+            uni.showToast({
+              icon: "error",
+              title: res.msg
+            })
+          }
         })
-        uni.reLaunch({
-          url: '/pages/index/index'
-        });
-      }).catch((err: any) => {
+      }).catch((err) => {
         console.log('err', err);
       })
     },
@@ -85,7 +91,7 @@ export default Vue.extend({
       });
     }
   }
-});
+};
 </script>
 
 <style>

@@ -12,8 +12,17 @@
         <uni-forms-item label="确认密码" required name="confirmPassword">
           <uni-easyinput type="password" v-model="customFormData.confirmPassword" placeholder="请输入密码"/>
         </uni-forms-item>
-        <uni-forms-item label="角色" required name="role">
-          <uni-data-checkbox v-model="customFormData.role" :localdata="roles"/>
+        <uni-forms-item label="姓名" required name="nickName">
+          <uni-easyinput v-model="customFormData.nickName" placeholder="请输入姓名"/>
+        </uni-forms-item>
+        <uni-forms-item label="电话号码" required name="mobile">
+          <uni-easyinput v-model="customFormData.mobile" placeholder="请输入电话号码"/>
+        </uni-forms-item>
+        <uni-forms-item label="身份证号" required name="cardNum">
+          <uni-easyinput v-model="customFormData.cardNum" placeholder="请输入身份证号"/>
+        </uni-forms-item>
+        <uni-forms-item label="角色" required name="type">
+          <uni-data-checkbox v-model="customFormData.type" :localdata="roles"/>
         </uni-forms-item>
       </uni-forms>
       <button type="primary" @click="submit('customForm')">注册账号</button>
@@ -21,25 +30,29 @@
   </view>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
+import request from "@/api/request";
 
-export default Vue.extend({
+export default{
   data() {
     return {
       roles: [{
         text: '租户',
-        value: 1
+        value: 2
       }, {
         text: '业主',
-        value: 2
+        value: 1
       }],
       // 表单数据
       customFormData: {
         username: '',
         password: '',
         confirmPassword: '',
-        role: ''
+        type: '',
+        cardNum: '',
+        nickName: '',
+        mobile: ''
       },
       // 自定义表单校验规则
       customRules: {
@@ -47,6 +60,24 @@ export default Vue.extend({
           rules: [{
             required: true,
             errorMessage: '用户名不能为空'
+          }]
+        },
+        cardNum: {
+          rules: [{
+            required: true,
+            errorMessage: '身份证号不能为空'
+          }]
+        },
+        nickName: {
+          rules: [{
+            required: true,
+            errorMessage: '姓名不能为空'
+          }]
+        },
+        mobile: {
+          rules: [{
+            required: true,
+            errorMessage: '电话号码不能为空'
           }]
         },
         password: {
@@ -61,7 +92,7 @@ export default Vue.extend({
             errorMessage: '确认密码不能为空'
           },
             {
-              validateFunction: function (rule: any, value: any, data: { password: any; }, callback: (arg0: string) => void) {
+              validateFunction: function (rule, value, data, callback) {
                 if (value != data.password) {
                   callback('两次输入的密码不同')
                 }
@@ -69,7 +100,7 @@ export default Vue.extend({
               }
             }]
         },
-        role: {
+        type: {
           rules: [{
             required: true,
             errorMessage: '角色不能为空'
@@ -81,19 +112,33 @@ export default Vue.extend({
   onLoad() {
   },
   methods: {
-    submit(ref: string | number) {
-      const form:any = this.$refs[ref]
-      form.validate().then((res: any) => {
-        console.log('success', res);
-        uni.showToast({
-          title: `校验通过`
+    submit(ref) {
+      const form = this.$refs[ref]
+      form.validate().then(() => {
+        request("/manage/app/register", this.customFormData, "post").then(res => {
+          if (res.code == 0) {
+            uni.showToast({
+              mask:true,
+              title: `注册成功`
+            })
+            setTimeout(function () {
+              uni.reLaunch({
+                url: '/pages/login/index'
+              });
+            }, 800);
+          } else {
+            uni.showToast({
+              icon: "error",
+              title: res.msg
+            })
+          }
         })
-      }).catch((err: any) => {
+      }).catch((err) => {
         console.log('err', err);
       })
     },
   }
-});
+};
 </script>
 
 <style>

@@ -1,16 +1,18 @@
 <template>
   <view>
-    <view @longpress="longpress">
-      <uni-card>
+    <view>
+      <uni-card v-for="(item, i) in houseList" :key="i">
         <template v-slot:title>
           <view style="padding: 10px 10px 0 10px">
-            <uni-tag text="审核通过" type="primary" />
+            <uni-tag v-if="item.status == '1'" text="审核中" type="primary" />
+            <uni-tag v-if="item.status == '2'" text="审核通过" type="primary" />
+            <uni-tag v-if="item.status == '3'" text="审核通过" type="error" />
           </view>
 
         </template>
         <view style="display: inline-block;width: 80%">
-          <view style="padding: 10px 10px 5px 10px">XXX小区</view>
-          <view style="padding: 0 10px 10px 10px">一栋一单元</view>
+          <view style="padding: 10px 10px 5px 10px">{{ item.buildingName }}</view>
+          <view style="padding: 0 10px 10px 10px">{{ item.roomNumber }}</view>
         </view>
         <view style="display: inline-block">
           <cover-image style="height: 60px;width: 60px" src="/static/house-img.png"></cover-image>
@@ -22,10 +24,12 @@
   </view>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
+import request from "@/api/request";
+import getUserInfo from "@/utils/utils";
 
-export default Vue.extend({
+export default {
   data() {
     return {
       title: 'uni-fab',
@@ -41,7 +45,7 @@ export default Vue.extend({
         iconColor: '#fff'
       },
       is_color_type: false,
-
+      houseList: []
     }
   },
   onLoad() {
@@ -66,8 +70,20 @@ export default Vue.extend({
         }
       });
     },
+    getHouseList() {
+      const userInfo = getUserInfo()
+      request("/manage/app/getBuildingListByOwnerId", {id: userInfo.id}, "post").then(res => {
+        if (res.code == 0) {
+          this.houseList = res.data
+          console.log('success', res);
+        }
+      })
+    }
+  },
+  onShow() {
+    this.getHouseList()
   }
-});
+};
 </script>
 
 <style>

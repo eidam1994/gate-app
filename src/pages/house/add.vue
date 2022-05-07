@@ -3,19 +3,16 @@
     <view class="example">
       <!-- 自定义表单校验 -->
       <uni-forms ref="customForm" :rules="customRules" :modelValue="customFormData">
-        <uni-forms-item label="小区" name="district">
-          <uni-easyinput disabled :styles="{ disableColor: '#fff', borderColor: '#e5e5e5'}"
-                         v-model="customFormData.district"/>
-        </uni-forms-item>
-        <uni-forms-item label="楼栋" required name="address">
-          <uni-data-picker placeholder="请选择楼栋" popup-title="请选择楼栋" :localdata="dataTree" v-model="customFormData.address"
-                           @change="onchange" @nodeclick="onnodeclick" @popupopened="onpopupopened"
-                           @popupclosed="onpopupclosed">
+        <uni-forms-item label="楼栋" required name="buildingId">
+          <uni-data-picker placeholder="请选择楼栋" popup-title="请选择楼栋" :localdata="dataTree"
+                           v-model="customFormData.buildingId" :map="{text: 'name', value: 'id'}"
+          >
           </uni-data-picker>
         </uni-forms-item>
-        <uni-forms-item label="房号" required name="roomNo">
+        <uni-forms-item label="房号" required name="roomNumber">
           <uni-easyinput
-              v-model="customFormData.roomNo"/>
+              type="number"
+              v-model="customFormData.roomNumber"/>
         </uni-forms-item>
       </uni-forms>
       <button type="primary" @click="submit('customForm')">新增房屋信息</button>
@@ -23,76 +20,90 @@
   </view>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
+import request from "@/api/request";
+import getUserInfo from "@/utils/utils";
 
-export default Vue.extend({
+export default{
   data() {
     return {
       // 表单数据
       customFormData: {
-        district: 'XXX小区',
-        address: '',
-        roomNo: '',
+        buildingId: '',
+        roomNumber: '',
       },
       // 自定义表单校验规则
       customRules: {
-        address: {
+        buildingId: {
           rules: [{
             required: true,
             errorMessage: '楼栋不能为空'
           }]
         },
-        roomNo: {
+        roomNumber: {
           rules: [{
             required: true,
             errorMessage: '房号不能为空'
           }]
         },
       },
-      classes: '1-2',
-      dataTree: [{
-        text: "一年级",
-        value: "1-0",
-      },
-        {
-          text: "二年级",
-          value: "2-0",
-        },
-        {
-          text: "三年级",
-          value: "3-0",
-        }]
+      dataTree: []
     }
   },
   onLoad() {
   },
   methods: {
-    submit(ref: string | number) {
-      const form:any = this.$refs[ref]
-      form.validate().then((res: any) => {
-        console.log('success', res);
-        uni.redirectTo({
-          url: '/pages/house/index'
-        });
-      }).catch((err: any) => {
+    submit(ref) {
+      const form = this.$refs[ref]
+      form.validate().then(() => {
+        const userInfo = getUserInfo()
+        request("/manage/app/houseRegister", {id: userInfo.id, ...this.customFormData}, "post").then(res => {
+          if (res.code == 0) {
+            uni.showToast({
+              mask:true,
+              title: `登记成功`
+            })
+            setTimeout(function () {
+              uni.navigateBack({
+                delta: 1
+              });
+            }, 800);
+          } else {
+            uni.showToast({
+              icon: "error",
+              title: res.msg
+            })
+          }
+        })
+      }).catch((err) => {
         console.log('err', err);
       })
     },
-    onnodeclick(e: any) {
+    onnodeclick(e) {
       console.log(e);
     },
-    onpopupopened(e: any) {
+    onpopupopened(e) {
       console.log('popupopened');
     },
-    onpopupclosed(e: any) {
+    onpopupclosed(e) {
       console.log('popupclosed');
     },
-    onchange(e: any) {
+    onchange(e) {
       console.log('onchange:', e);
+    },
+    getBuildingList() {
+      request("/manage/app/getBuildingList", {}, "post").then(res => {
+        if (res.code == 0) {
+          this.dataTree = res.data
+        }
+      })
     }
+  },
+  onShow() {
+    this.getBuildingList()
   }
-});
+};
 </script>
 
 <style>

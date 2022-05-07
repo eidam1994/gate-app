@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-      <uni-card style="margin-top: 10px" :isFull="true" title="张三" :thumbnail="'/static/person.png'">
+      <uni-card style="margin-top: 10px" :isFull="true" :title="name" :thumbnail="'/static/person.png'">
         <uni-list style="margin-top: 10px;border: none">
           <uni-list-item :showExtraIcon="true" :extra-icon="{color: '#ea64d4',size: '22', type: 'locked-filled'}" title="修改密码" clickable link @click="onClick" ></uni-list-item>
           <uni-list-item :showExtraIcon="true" :extra-icon="{color: '#e04760',size: '22', type: 'chatboxes-filled'}" title="投诉与建议" clickable link @click="onClick" ></uni-list-item>
@@ -13,23 +13,26 @@
   </view>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
+import getUserInfo from "@/utils/utils.js";
 
-export default Vue.extend({
+export default {
   data() {
     return {
       extraIcon: {
         color: '#4cd964',
         size: '22',
         type: 'gear-filled'
-      }
+      },
+      name: ''
     }
   },
   onLoad() {
   },
   methods: {
     logout() {
+      uni.removeStorageSync('user');
       uni.reLaunch({
         url: '/pages/login/index'
       });
@@ -43,9 +46,9 @@ export default Vue.extend({
     }
   },
   onShow() {
-
+    this.name = getUserInfo().nickName;
   }
-});
+};
 </script>
 
 <style>

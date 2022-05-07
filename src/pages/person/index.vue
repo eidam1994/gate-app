@@ -1,8 +1,8 @@
 <template>
   <view>
-    <uni-list border-full>
-      <view @longpress="longpress">
-        <uni-list-item title="李四" note="幸福小区一栋一单元" rightText="入住时间：2022-04-29"/>
+    <uni-list :border="false">
+      <view class="list-view" v-for="(item, i) in personList" @longpress="longpress(item.id)">
+        <uni-list-item :title="item.name" :note="item.buildingName + item.roomNumber"/>
       </view>
     </uni-list>
     <uni-fab ref="fab" :pattern="pattern" :horizontal="horizontal" :vertical="vertical"
@@ -10,10 +10,12 @@
   </view>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
+import request from "@/api/request";
+import getUserInfo from "@/utils/utils";
 
-export default Vue.extend({
+export default{
   data() {
     return {
       title: 'uni-fab',
@@ -29,7 +31,7 @@ export default Vue.extend({
         iconColor: '#fff'
       },
       is_color_type: false,
-
+      personList: []
     }
   },
   onLoad() {
@@ -40,24 +42,46 @@ export default Vue.extend({
         url: '/pages/person/add'
       });
     },
-    longpress() {
+    longpress(id) {
+      const that = this;
       uni.showModal({
         content: '确定要删除该租客信息吗？',
         confirmText: '删除',
         confirmColor: 'red',
         success: function (res) {
           if (res.confirm) {
-            console.log('用户点击确定');
+            request("/manage/app/delLesseeById", {id: id}, "post").then(res => {
+              if (res.code == 0) {
+                uni.showToast({
+                  mask:true,
+                  title: `删除成功`
+                })
+                that.getPersonList()
+              }
+            })
           } else if (res.cancel) {
-            console.log('用户点击取消');
           }
         }
       });
     },
+    getPersonList() {
+      const userInfo = getUserInfo()
+      request("/manage/app/getLesseeList", {id: userInfo.id}, "post").then(res => {
+        if (res.code == 0) {
+          this.personList = res.data
+          console.log('success', res);
+        }
+      })
+    }
+  },
+  onShow() {
+    this.getPersonList()
   }
-});
+};
 </script>
 
 <style>
-
+  .uni-list-item {
+    border-bottom: 1px solid #e5e5e5 !important;
+  }
 </style>

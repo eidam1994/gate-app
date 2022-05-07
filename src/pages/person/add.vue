@@ -2,21 +2,18 @@
   <view class="content">
     <view class="example">
       <!-- 自定义表单校验 -->
-      <uni-forms ref="customForm" :rules="customRules" :modelValue="customFormData">
-        <uni-forms-item label="姓名" required name="name">
-          <uni-easyinput v-model="customFormData.name"/>
+      <uni-forms :label-width="100" ref="customForm" :rules="customRules" :modelValue="customFormData">
+        <uni-forms-item label="租客姓名" required name="nickName">
+          <uni-easyinput v-model="customFormData.nickName"/>
         </uni-forms-item>
-        <uni-forms-item label="租客编号" required name="code">
-          <uni-easyinput v-model="customFormData.code"/>
+        <uni-forms-item label="租客身份证号" required name="cardNum">
+          <uni-easyinput v-model="customFormData.cardNum"/>
         </uni-forms-item>
-        <uni-forms-item label="房屋" required name="address">
-          <uni-data-picker placeholder="请选择房屋" popup-title="请选择房屋" :localdata="dataTree" v-model="customFormData.address"
+        <uni-forms-item label="已登记房屋" required name="houseId">
+          <uni-data-picker placeholder="请选择房屋" popup-title="请选择房屋" :localdata="houseList" v-model="customFormData.houseId"
                            @change="onchange" @nodeclick="onnodeclick" @popupopened="onpopupopened"
-                           @popupclosed="onpopupclosed">
+                           @popupclosed="onpopupclosed" :map="{text: 'houseName', value: 'houseId'}">
           </uni-data-picker>
-        </uni-forms-item>
-        <uni-forms-item label="入住时间" required name="inTime">
-          <uni-datetime-picker type="date" v-model="customFormData.inTime"/>
         </uni-forms-item>
       </uni-forms>
       <button type="primary" @click="submit('customForm')">新增租客信息</button>
@@ -24,89 +21,109 @@
   </view>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
+import request from "@/api/request";
+import getUserInfo from "@/utils/utils";
 
-export default Vue.extend({
+export default{
   data() {
     return {
       // 表单数据
       customFormData: {
-        code: '',
-        name: '',
-        address: '',
-        inTime: '',
+        id: '',
+        cardNum: '',
+        nickName: '',
+        houseId: '',
+        buildingId: '',
+        roomNumber: ''
       },
       // 自定义表单校验规则
       customRules: {
-        name: {
+        nickName: {
           rules: [{
             required: true,
-            errorMessage: '楼栋不能为空'
+            errorMessage: '姓名不能为空'
           }]
         },
-        code: {
+        cardNum: {
           rules: [{
             required: true,
-            errorMessage: '楼栋不能为空'
+            errorMessage: '身份证号不能为空'
           }]
         },
-        address: {
+        houseId: {
           rules: [{
             required: true,
             errorMessage: '房屋不能为空'
           }]
         },
-        inTime: {
-          rules: [{
-            required: true,
-            errorMessage: '入住时间不能为空'
-          }]
-        },
       },
-      classes: '1-2',
-      dataTree: [{
-        text: "一年级",
-        value: "1-0",
-      },
-        {
-          text: "二年级",
-          value: "2-0",
-        },
-        {
-          text: "三年级",
-          value: "3-0",
-        }]
+      houseList: [],
     }
   },
   onLoad() {
   },
   methods: {
-    submit(ref: string | number) {
-      const form:any = this.$refs[ref]
-      form.validate().then((res: any) => {
-        console.log('success', res);
-        uni.redirectTo({
-          url: '/pages/person/index'
-        });
-      }).catch((err: any) => {
+    submit(ref) {
+      const form = this.$refs[ref]
+      form.validate().then((res) => {
+        const houseInfo = this.customFormData.houseId.split("|");
+        this.customFormData.buildingId = houseInfo[0]
+        this.customFormData.roomNumber = houseInfo[1]
+        request("/manage/app/lesseeRegister", this.customFormData, "post").then(res => {
+          if (res.code == 0) {
+            uni.showToast({
+              mask:true,
+              title: `新增成功`
+            })
+            setTimeout(function () {
+              uni.navigateBack({
+                delta: 1
+              });
+            }, 800);
+          } else {
+            uni.showToast({
+              icon: "error",
+              title: res.msg
+            })
+          }
+        })
+      }).catch((err) => {
         console.log('err', err);
       })
     },
-    onnodeclick(e: any) {
+    onnodeclick(e) {
       console.log(e);
     },
-    onpopupopened(e: any) {
+    onpopupopened(e) {
       console.log('popupopened');
     },
-    onpopupclosed(e: any) {
+    onpopupclosed(e) {
       console.log('popupclosed');
     },
-    onchange(e: any) {
+    onchange(e) {
       console.log('onchange:', e);
+    },
+    getHouseList() {
+      const userInfo = getUserInfo()
+      this.customFormData.id = userInfo.id;
+      request("/manage/app/getBuildingListByOwnerId", {id: userInfo.id, status: "2"}, "post").then(res => {
+        if (res.code == 0) {
+          this.houseList = res.data.map(item => {
+            console.log(item, "item")
+            item.houseName = item.buildingName + item.roomNumber
+            item.houseId = item.buildingId + "|" + item.roomNumber
+            return item
+          })
+        }
+      })
     }
+  },
+  onShow() {
+    this.getHouseList()
   }
-});
+};
 </script>
 
 <style>

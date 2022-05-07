@@ -1,40 +1,63 @@
 <template>
   <view>
-      <uni-card title="XXX小区" sub-title="一栋一单元">
-        <button type="primary" @click="openDoor">
+      <uni-card v-for="(item, i) in doorList" :key="i" :title="item.buildingName" :sub-title="'房号：' + item.roomNumber">
+        <button type="primary" @click="openDoor(item.buildingId)">
           一键开门
         </button>
       </uni-card>
   </view>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
+import request from "@/api/request";
+import getUserInfo from "@/utils/utils";
 
-export default Vue.extend({
+export default{
   data() {
     return {
-      title: 'Hello'
+      doorList: []
     }
   },
   onLoad() {
   },
   methods: {
-    openDoor() {
+    openDoor(buildingId) {
       uni.showLoading({
         title: '开门中',
         mask: true
       });
-      setTimeout(function () {
-        uni.hideLoading();
-        uni.showToast({
-          title: '门已打开',
-          duration: 2000
-        });
-      }, 500);
+      request("/manage/app/openDoor", {buildingId: buildingId}, "post").then(res => {
+        if (res.code == 0) {
+          uni.hideLoading();
+          uni.showToast({
+            title: '门已打开',
+            duration: 2000
+          });
+        }
+      })
+      // setTimeout(function () {
+      //   uni.hideLoading();
+      //   uni.showToast({
+      //     title: '门已打开',
+      //     duration: 2000
+      //   });
+      // }, 500);
+    },
+    getDoorList() {
+      const userInfo = getUserInfo()
+      request("/manage/app/getOpenList", {id: userInfo.id, status: '2'}, "post").then(res => {
+        if (res.code == 0) {
+          this.doorList = res.data
+          console.log('success', res);
+        }
+      })
     }
+  },
+  onShow() {
+    this.getDoorList()
   }
-});
+};
 </script>
 
 <style>

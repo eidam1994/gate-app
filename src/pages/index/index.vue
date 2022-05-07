@@ -1,7 +1,7 @@
 <template>
   <view class="">
     <uni-card>
-      <cover-image src="/static/welcome.jpeg"></cover-image>
+      <image src="/static/welcome.jpeg"></image>
     </uni-card>
     <uni-card>
       <uni-grid :column="3" :show-border="false" :square="false">
@@ -45,10 +45,10 @@
   </view>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
 
-export default Vue.extend({
+export default{
   data() {
     return {
     }
@@ -78,7 +78,7 @@ export default Vue.extend({
   onShow() {
 
   }
-});
+};
 </script>
 
 <style>
