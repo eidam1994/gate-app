@@ -128,6 +128,39 @@
 					"colorType": "grey"
 				}
 			}
+		},
+		{
+			"path": "pages/notice/index",
+			"style": {
+				"navigationBarTitleText": "社区活动",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
+			}
+		},
+		{
+			"path": "pages/notice/detail",
+			"style": {
+				"navigationBarTitleText": "活动详情",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
+			}
+		},
+		{
+			"path": "pages/account/info",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
+			}
 		}
 	],
 	"globalStyle": {
