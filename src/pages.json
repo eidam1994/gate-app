@@ -46,7 +46,9 @@
 			"style": {
 				"navigationBarTitleText": "我的",
 				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "white",
+				"navigationBarBackgroundColor": "#F8F8F8",
+				"backgroundColor": "#F8F8F8",
+				"navigationStyle": "custom",
 				"navigationBarShadow": {
 					"colorType": "grey"
 				}
@@ -155,6 +157,28 @@
 			"path": "pages/account/info",
 			"style": {
 				"navigationBarTitleText": "个人中心",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
+			}
+		},
+		{
+			"path": "pages/pay/network",
+			"style": {
+				"navigationBarTitleText": "缴纳网费",
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "white",
+				"navigationBarShadow": {
+					"colorType": "grey"
+				}
+			}
+		},
+		{
+			"path": "pages/pay/rent",
+			"style": {
+				"navigationBarTitleText": "缴纳房租",
 				"navigationBarTextStyle": "black",
 				"navigationBarBackgroundColor": "white",
 				"navigationBarShadow": {

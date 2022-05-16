@@ -27,7 +27,8 @@ export default{
         title: '开门中',
         mask: true
       });
-      request("/manage/app/openDoor", {buildingId: buildingId}, "post").then(res => {
+      const userInfo = getUserInfo()
+      request("/manage/app/openDoor", {buildingId: buildingId, id: userInfo.id}, "post").then(res => {
         if (res.code == 0) {
           uni.hideLoading();
           uni.showToast({

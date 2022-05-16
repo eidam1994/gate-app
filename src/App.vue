@@ -18,6 +18,9 @@
 </script>
 
 <style>
+uni-page {
+  background-color: #f8f8f8;
+}
 .uni-card {
   padding: 0px !important;
 }

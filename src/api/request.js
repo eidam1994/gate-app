@@ -1,6 +1,6 @@
 import getUserInfo from "@/utils/utils";
 
-const baseUrl = 'http://172.16.16.200:9999'
+const baseUrl = 'http://39.99.248.243:9321'
 const request = (url = '', data = {}, type = 'GET', header = {
 }) => {
     getUserInfo()

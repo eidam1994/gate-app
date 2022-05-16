@@ -1,6 +1,6 @@
 <template>
   <view class="content">
-    <uni-title style="margin-top: 80px" type="h1" title="珞珈德毅智慧门禁" align="center"></uni-title>
+    <uni-title style="padding-top: 80px" type="h1" title="珞珈德毅智慧门禁" align="center"></uni-title>
     <view class="example">
       <!-- 自定义表单校验 -->
       <uni-forms ref="customForm" :rules="customRules" :modelValue="customFormData">
@@ -127,5 +127,10 @@ export default{
   align-items: center;
   height: 35px;
   margin-left: 10px;
+}
+
+.content {
+  height: 100vh;
+  background-color: white;
 }
 </style>

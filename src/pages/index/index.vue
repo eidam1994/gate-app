@@ -16,13 +16,13 @@
           </view>
         </uni-grid-item>
         <uni-grid-item v-if="userInfo.type === '2'">
-          <view @click="onClick" class="grid-item-box">
+          <view @click="goToNetPay" class="grid-item-box">
             <image class="image" :src="'/static/netPay.png'" mode="aspectFill" />
             <text class="text">缴纳网费</text>
           </view>
         </uni-grid-item>
         <uni-grid-item v-if="userInfo.type === '2'">
-          <view @click="onClick" class="grid-item-box">
+          <view @click="goToRentPay" class="grid-item-box">
             <image class="image" :src="'/static/rent.png'" mode="aspectFill" />
             <text class="text">缴纳房租</text>
           </view>
@@ -99,6 +99,16 @@ export default{
     goToDetail(id) {
       uni.navigateTo({
         url: '/pages/notice/detail?noticeId=' + id
+      });
+    },
+    goToNetPay() {
+      uni.navigateTo({
+        url: '/pages/pay/network'
+      });
+    },
+    goToRentPay() {
+      uni.navigateTo({
+        url: '/pages/pay/rent'
       });
     },
     onClick() {
